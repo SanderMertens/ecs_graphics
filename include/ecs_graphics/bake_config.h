@@ -18,12 +18,12 @@
 #define ECS_GRAPHICS_BAKE_CONFIG_H
 
 /* Headers of public dependencies */
-#include <flecs>
-#include <flecs.components.transform>
-#include <flecs.components.geometry>
-#include <flecs.components.graphics>
-#include <flecs.components.input>
-#include <flecs.systems.sdl2>
+#include <flecs.h>
+#include <flecs_components_transform.h>
+#include <flecs_components_geometry.h>
+#include <flecs_components_graphics.h>
+#include <flecs_components_input.h>
+#include <flecs_systems_sdl2.h>
 
 /* Headers of private dependencies */
 #ifdef ECS_GRAPHICS_IMPL
@@ -31,14 +31,18 @@
 #endif
 
 /* Convenience macro for exporting symbols */
-#if ECS_GRAPHICS_IMPL && defined _MSC_VER
-#define ECS_GRAPHICS_EXPORT __declspec(dllexport)
-#elif ECS_GRAPHICS_IMPL
-#define ECS_GRAPHICS_EXPORT __attribute__((__visibility__("default")))
-#elif defined _MSC_VER
-#define ECS_GRAPHICS_EXPORT __declspec(dllimport)
+#ifndef ECS_GRAPHICS_STATIC
+  #if ECS_GRAPHICS_IMPL && (defined(_MSC_VER) || defined(__MINGW32__))
+    #define ECS_GRAPHICS_EXPORT __declspec(dllexport)
+  #elif ECS_GRAPHICS_IMPL
+    #define ECS_GRAPHICS_EXPORT __attribute__((__visibility__("default")))
+  #elif defined _MSC_VER
+    #define ECS_GRAPHICS_EXPORT __declspec(dllimport)
+  #else
+    #define ECS_GRAPHICS_EXPORT
+  #endif
 #else
-#define ECS_GRAPHICS_EXPORT
+  #define ECS_GRAPHICS_EXPORT
 #endif
 
 #endif

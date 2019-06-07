@@ -1,4 +1,4 @@
-#include <include/ecs_graphics.h>
+#include <ecs_graphics.h>
 
 #define MOVE_SPEED (5)
 
@@ -16,23 +16,23 @@ void MoveSquare(ecs_rows_t *rows) {
 }
 
 int main(int argc, char *argv[]) {
-    ecs_world_t *world = ecs_init();
+    ecs_world_t *world = ecs_init_w_args(argc, argv);
 
-    ECS_IMPORT(world, EcsComponentsTransform, ECS_2D);
-    ECS_IMPORT(world, EcsComponentsGeometry, ECS_2D);
-    ECS_IMPORT(world, EcsComponentsGraphics, ECS_2D);
-    ECS_IMPORT(world, EcsComponentsInput, ECS_2D);
-    ECS_IMPORT(world, EcsSystemsSdl2, ECS_2D);
+    ECS_IMPORT(world, FlecsComponentsTransform, ECS_2D);
+    ECS_IMPORT(world, FlecsComponentsGeometry, ECS_2D);
+    ECS_IMPORT(world, FlecsComponentsGraphics, ECS_2D);
+    ECS_IMPORT(world, FlecsComponentsInput, ECS_2D);
+    ECS_IMPORT(world, FlecsSystemsSdl2, ECS_2D);
 
-    /* Define entity for square and canvas (SDL window) */
+    /* Define entity for square */
     ECS_ENTITY(world, Square, EcsPosition2D, EcsSquare, EcsColor);
 
     /* Define system that moves the square on keyboard input */
-    ECS_SYSTEM(world, MoveSquare, EcsOnFrame, EcsInput, Square.EcsPosition2D);
+    ECS_SYSTEM(world, MoveSquare, EcsOnUpdate, EcsInput, Square.EcsPosition2D);
 
     /* Initialize canvas */
     ecs_set(world, 0, EcsCanvas2D, {
-        .window = { .width = 800, .height = 600, }, .title = "Hello ecs_graphics!" 
+        .window = { .width = 800, .height = 600 }, .title = "Hello ecs_graphics!" 
     });
 
     /* Initialize square */
