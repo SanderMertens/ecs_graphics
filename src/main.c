@@ -15,6 +15,10 @@ void MoveSquare(ecs_rows_t *rows) {
     position->y += y_v * MOVE_SPEED;
 }
 
+void SomeTest(ecs_rows_t *rows) {
+
+}
+
 int main(int argc, char *argv[]) {
     ecs_world_t *world = ecs_init_w_args(argc, argv);
 
@@ -29,6 +33,8 @@ int main(int argc, char *argv[]) {
 
     /* Define system that moves the square on keyboard input */
     ECS_SYSTEM(world, MoveSquare, EcsOnUpdate, EcsInput, Square.EcsPosition2D);
+
+    ECS_SYSTEM(world, SomeTest, EcsOnUpdate, EcsPosition2D, !$.EcsPosition2D);
 
     /* Initialize canvas */
     ecs_set(world, 0, EcsCanvas2D, {

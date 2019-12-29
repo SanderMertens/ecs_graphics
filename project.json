@@ -11,6 +11,12 @@
             "flecs.components.graphics",
             "flecs.components.input",
             "flecs.systems.sdl2"
-        ]
+        ],
+        "use-bundle": ["flecs.hub:default"]        
+    },
+    "bundle": {
+        "repositories": {
+            "flecs.hub": "https://github.com/flecs-hub/flecs-hub"
+        }
     }
 }
